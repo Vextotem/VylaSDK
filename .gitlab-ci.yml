@@ -8,15 +8,9 @@ publish:
   stage: publish
   image: node:22
   rules:
-    - when: manual
-  before_script:
-    - git config user.name "gitlab-ci"
-    - git config user.email "gitlab-ci@$CI_SERVER_HOST"
-    - git remote set-url origin "https://oauth2:${GITLAB_PUSH_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
-    - git checkout "$CI_COMMIT_BRANCH"
+    - if: '$CI_COMMIT_TAG'
+      when: manual
   script:
     - npm ci
-    - npm version minor
-    - git push origin HEAD:"$CI_COMMIT_BRANCH" --follow-tags
     - echo "//registry.npmjs.org/:_authToken=${NPM_KEY}" > .npmrc
     - npm publish
