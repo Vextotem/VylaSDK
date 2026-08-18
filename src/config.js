@@ -7,17 +7,6 @@
 
 export const SOURCES = [
     {
-        key: '1embed',
-        label: '1Embed',
-        sourceFile: '1embed',
-        proxyParam: '1e',
-        timeout: 20000,
-        jitter: 500,
-        retries: 2,
-        multiUrl: true,
-    },
-
-    {
         key: '123anime',
         label: '123Anime',
         sourceFile: '123anime',
@@ -146,6 +135,18 @@ export const SOURCES = [
     },
 
     {
+        key: 'frame',
+        label: 'Frame',
+        sourceFile: 'frame',
+        proxyParam: 'fr',
+        timeout: 25000,
+        jitter: 500,
+        retries: 2,
+        multiUrl: true,
+        skipProxy: true,
+    },
+
+    {
         key: 'fsharetv',
         label: 'FShareTV',
         sourceFile: 'fsharetv',
@@ -252,30 +253,15 @@ export const SOURCES = [
     },
 
     {
-        key: 'opstream',
-        label: 'OpStream',
-        sourceFile: 'opstream',
-        proxyParam: 'op',
-        timeout: 35000,
+        key: 'peestream',
+        label: 'PeeStream',
+        sourceFile: 'peestream',
+        proxyParam: 'pee',
+        timeout: 25000,
         jitter: 500,
         retries: 2,
         multiUrl: true,
         skipProxy: true,
-        verifyHeaders: {
-            Referer: 'https://opstream.fun/',
-            Origin: 'https://opstream.fun',
-        },
-    },
-
-    {
-        key: 'peachify',
-        label: 'Peachify',
-        sourceFile: 'peachify',
-        proxyParam: 'pf',
-        timeout: 30000,
-        jitter: 500,
-        retries: 1,
-        multiUrl: true
     },
 
     {
@@ -408,7 +394,8 @@ export const SOURCES = [
         jitter: 500,
         retries: 2,
         multiUrl: true,
-        skipProxy: true
+        skipProxy: true,
+        disabled: true, // Temporarily disabled because their site is down, embed website does not load
     },
 
     {

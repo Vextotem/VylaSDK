@@ -23,7 +23,7 @@ This project is developed and maintained by [Vyla Entertainment](https://github.
 
 Original work and core authorship:
 
-[@endoverdosing](https://github.com/EndOverdosing)
+[@alwaysmesmerizingyou](https://gitlab.com/alwaysmesmerizingyou)
 
 [@GavinGoGaming](https://github.com/GavinGoGaming)
 

@@ -76,13 +76,29 @@ export async function getStream(args) {
         const reqMatch = html.match(/window\.__REQUEST_TOKEN__\s*=\s*"([^"]+)"/);
         if (!reqMatch) return null;
         const requestToken = reqMatch[1];
-        const initRes = await fetch(`${BASE_URL}/api/playback-init`, { method: "POST", headers: { "Content-Type": "application/json", ...PROXY_HEADERS, Referer: pageUrl }, body: JSON.stringify({ mediaId: Number(id), mediaType, requestToken }), signal: AbortSignal.timeout(10000) });
+        const cookies = pageRes.headers.getSetCookie();
+        const cookieHeader = cookies.map(c => c.split(';')[0]).join('; ');
+        
+        const initHeaders = { "Content-Type": "application/json", ...PROXY_HEADERS, Referer: pageUrl };
+        if (cookieHeader) initHeaders.Cookie = cookieHeader;
+
+        const initRes = await fetch(`${BASE_URL}/api/playback-init`, { 
+            method: "POST", 
+            headers: initHeaders, 
+            body: JSON.stringify({ mediaId: Number(id), mediaType, requestToken }), 
+            signal: AbortSignal.timeout(10000) 
+        });
         const initData = await initRes.json();
         let streamToken = initData.token;
         if (initData.requiresPow && initData.pow) {
             const powRes = solvePoW(initData.pow.challenge, initData.pow.difficulty);
             if (powRes.found) {
-                const solveRes = await fetch(`${BASE_URL}/api/playback-init`, { method: "POST", headers: { "Content-Type": "application/json", ...PROXY_HEADERS, Referer: pageUrl }, body: JSON.stringify({ mediaId: Number(id), mediaType, requestToken, pow: { challengeId: initData.pow.challengeId, nonce: powRes.nonce } }), signal: AbortSignal.timeout(10000) });
+                const solveRes = await fetch(`${BASE_URL}/api/playback-init`, { 
+                    method: "POST", 
+                    headers: initHeaders, 
+                    body: JSON.stringify({ mediaId: Number(id), mediaType, requestToken, pow: { challengeId: initData.pow.challengeId, nonce: powRes.nonce } }), 
+                    signal: AbortSignal.timeout(10000) 
+                });
                 streamToken = (await solveRes.json()).token;
             }
         }
@@ -96,8 +112,28 @@ export async function getStream(args) {
         const allUrls = [];
         for (const srv of targets) {
             try {
-                const streamUrl = `${BASE_URL}/api/stream?mediaId=${id}&mediaType=${mediaType}&tv_slug=${tvSlug}&source=${srv.id}&apikey=mptv_sk_a8f29c4e7b3d1f&requestToken=${requestToken}&token=${streamToken}`;
-                const streamRes = await fetch(streamUrl, { headers: { ...PROXY_HEADERS, Referer: pageUrl }, signal: AbortSignal.timeout(8000) });
+                const encryptRes = await fetch(`${BASE_URL}/api/encrypt`, {
+                    method: "POST",
+                    headers: initHeaders,
+                    body: JSON.stringify({
+                        data: {
+                            mediaId: Number(id),
+                            mediaType,
+                            tv_slug: tvSlug,
+                            source: srv.id,
+                            apikey: "mptv_sk_a8f29c4e7b3d1f"
+                        }
+                    }),
+                    signal: AbortSignal.timeout(8000)
+                });
+                const encryptData = await encryptRes.json();
+                if (!encryptData.encrypted) continue;
+
+                const streamUrl = `${BASE_URL}/api/stream-encrypted?data=${encodeURIComponent(encryptData.encrypted)}&requestToken=${encodeURIComponent(requestToken)}&token=${encodeURIComponent(streamToken)}`;
+                const streamRes = await fetch(streamUrl, { 
+                    headers: { ...PROXY_HEADERS, Referer: pageUrl, ...(cookieHeader ? { Cookie: cookieHeader } : {}) }, 
+                    signal: AbortSignal.timeout(8000) 
+                });
                 const streamData = await streamRes.json();
                 if (streamData.success && streamData.data?.stream_url) {
                     let fileUrl = streamData.data.stream_url;
