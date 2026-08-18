@@ -1,3 +1,9 @@
+stages:
+  - build
+  - test
+  - deploy
+  - publish
+
 publish:
   stage: publish
   image: node:22
