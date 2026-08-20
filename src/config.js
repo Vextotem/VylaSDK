@@ -231,6 +231,32 @@ export const SOURCES = [
     },
 
     {
+        key: 'luna-sub',
+        label: 'Luna (Sub)',
+        sourceFile: 'luna',
+        proxyParam: 'lusub',
+        subtype: 'sub',
+        timeout: 25000,
+        jitter: 500,
+        retries: 2,
+        multiUrl: true,
+        skipProxy: true,
+    },
+
+    {
+        key: 'luna-dub',
+        label: 'Luna (Dub)',
+        sourceFile: 'luna',
+        proxyParam: 'ludub',
+        subtype: 'dub',
+        timeout: 25000,
+        jitter: 500,
+        retries: 2,
+        multiUrl: true,
+        skipProxy: true,
+    },
+
+    {
         key: 'mapple',
         label: 'Mapple',
         sourceFile: 'mapple',
@@ -286,6 +312,17 @@ export const SOURCES = [
         jitter: 500,
         retries: 2,
         skipProxy: true
+    },
+
+    {
+        key: 'rivestream',
+        label: 'RiveStream',
+        sourceFile: 'rivestream',
+        proxyParam: 'rs',
+        timeout: 30000,
+        jitter: 500,
+        retries: 2,
+        multiUrl: true,
     },
 
     {
@@ -478,7 +515,6 @@ export const SOURCES = [
             Referer: 'https://player.vidzee.wtf',
             Origin: 'https://player.vidzee.wtf',
         },
-        disabled: true // Disabled temporarily due to decryption issues
     },
 
     {
