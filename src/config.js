@@ -338,6 +338,18 @@ export const SOURCES = [
     },
 
     {
+        key: 'vidgod',
+        label: 'VidGod',
+        sourceFile: 'vidgod',
+        proxyParam: 'vg',
+        timeout: 25000,
+        jitter: 500,
+        retries: 2,
+        multiUrl: true,
+        skipProxy: true,
+    },
+
+    {
         key: 'vidlink',
         label: 'Vidlink',
         sourceFile: 'vidlink',
