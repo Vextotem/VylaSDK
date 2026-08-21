@@ -12,7 +12,9 @@ const SERVERS = [
     { id: 'superflix', name: 'Raze' }
 ];
 
-export async function getStream({ id, s, e, server, tmdbApiKey }) {
+export async function getStream({ id, s, e, server, sdk }) {
+    const tmdbApiKey = sdk?.tmdbApiKey || null;
+    if (!tmdbApiKey) return null;
     try {
         const isTv = s != null && e != null;
         const info = await getTmdbInfo(tmdbApiKey, id, isTv ? 'tv' : 'movie');

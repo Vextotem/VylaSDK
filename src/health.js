@@ -14,7 +14,7 @@ async function withRetry(fn, attempts = 2, delay = 300) {
     return null;
 }
 
-export async function probeSource(tmdbApiKey, cfg, mod) {
+export async function probeSource(sdk, cfg, mod) {
     const audio = /dub$/.test(cfg.key) ? 'dub' : 'sub';
     const streamArgs = {
         id: HEALTH_PROBE_ID,
@@ -23,7 +23,7 @@ export async function probeSource(tmdbApiKey, cfg, mod) {
         clientIP: null,
         absoluteBase: null,
         audio,
-        tmdbApiKey,
+        sdk,
         config: cfg,
     };
 

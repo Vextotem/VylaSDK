@@ -4,7 +4,9 @@ const ORIGIN = 'https://www3.fsonline.app';
 const AJAX_URL = `${ORIGIN}/wp-admin/admin-ajax.php`;
 const HEADERS = { 'User-Agent': USER_AGENT, 'Origin': ORIGIN, 'Referer': `${ORIGIN}/` };
 
-export async function getStream({ id, s, e, tmdbApiKey }) {
+export async function getStream({ id, s, e, sdk }) {
+    const tmdbApiKey = sdk?.tmdbApiKey || null;
+    if (!tmdbApiKey) return null;
     try {
         const isTv = s != null && e != null;
         const info = await getTmdbInfo(tmdbApiKey, id, isTv ? 'tv' : 'movie');

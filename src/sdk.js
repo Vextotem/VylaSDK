@@ -13,8 +13,11 @@ const SOURCE_MODULES = Object.fromEntries(
 );
 
 export default class VylaSDK {
-    constructor({ tmdbApiKey } = {}) {
-        this.tmdbApiKey = tmdbApiKey;
+    tmdbApiKey = null;
+    penguManifest = null;
+    constructor({ tmdbApiKey, penguManifest } = {}) {
+        this.tmdbApiKey = tmdbApiKey || null;
+        this.penguManifest = penguManifest || null;
     }
     getSources(excludeDisabled = false) {
         if (excludeDisabled) {
@@ -43,14 +46,14 @@ export default class VylaSDK {
         if (!cfg) throw new Error(`Source with key "${key}" not found`);
         const mod = SOURCE_MODULES[key];
         if (!mod) throw new Error(`Source module for key "${key}" not found`);
-        return await probeSource(this.tmdbApiKey, cfg, mod);
+        return await probeSource(this, cfg, mod);
     }
     async getStream(key, id, s = null, e = null, clientIP = null) {
         const cfg = SOURCES.find(cfg => cfg.key === key);
         if (!cfg) throw new Error(`Source with key "${key}" not found`);
         const mod = SOURCE_MODULES[key];
         if (!mod) throw new Error(`Source module for key "${key}" not found`);
-        const streamArgs = await createStreamArgs(cfg, this.tmdbApiKey, id, s, e, clientIP);
+        const streamArgs = await createStreamArgs(cfg, this, id, s, e, clientIP);
         return await mod.getStream(streamArgs);
     }
     async getSubtitles(id, s = null, e = null) {

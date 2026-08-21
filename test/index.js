@@ -5,7 +5,6 @@ import fs from "fs";
 import path from "path";
 import VylaSDK from "../src/sdk.js";
 import dotenv from "dotenv";
-dotenv.config();
 
 const CONFIG = {
     DEBUG: true,                 // Set to true to print outgoing requests, headers, formats, and responses
@@ -14,13 +13,20 @@ const CONFIG = {
     TV_ID: "37854",               // TV TMDB ID to test, for anime I recommend using a random ID like 37854
     TV_SEASON: "1",              // TV Season to test
     TV_EPISODE: "1",             // TV Episode to test
-    STREAM_SOURCE: "cinejoy",    // Source key to test
+    STREAM_SOURCE: "pengu",    // Source key to test
 
     TEST_SUBTITLE: false,         // Toggle subtitle testing
     TEST_DOWNLOAD: false,         // Toggle download testing
     TEST_MOVIE: true,            // Toggle movie testing
-    TEST_TV: true                // Toggle TV testing
+    TEST_TV: true,                // Toggle TV testing
+
+    EXTRA_SDK_PARAMS: {           // Additional parameters for the SDK constructor
+        // penguManifest: ""
+    }
 };
+dotenv.config({
+    debug: CONFIG.DEBUG
+});
 
 // debug
 if (CONFIG.DEBUG) {
@@ -105,7 +111,8 @@ if (CONFIG.DEBUG) {
 }
 
 const sdk = new VylaSDK({
-    tmdbApiKey: process.env.TMDB_API_KEY
+    tmdbApiKey: process.env.TMDB_API_KEY,
+    ...CONFIG.EXTRA_SDK_PARAMS
 });
 
 console.log("Starting...");

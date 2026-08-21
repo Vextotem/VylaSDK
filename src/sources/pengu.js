@@ -1,7 +1,7 @@
 import { fetchJson } from '../utils/helpers.js';
 
-const PENGU_CONFIG = '%7B%22source_4khdhub%22%3A%22on%22%2C%22source_moviebox%22%3A%22on%22%2C%22source_moviesdrives%22%3A%22on%22%2C%22source_vaplayer%22%3A%22on%22%2C%22source_hdghartv%22%3A%22on%22%2C%22res_2160%22%3A%22on%22%2C%22res_1080%22%3A%22on%22%2C%22res_720%22%3A%22on%22%2C%22disable_direct%22%3A%22on%22%7D';
-const BASE_URL = `https://pengu.uk/${PENGU_CONFIG}`;
+// const PENGU_CONFIG = '%7B%22source_4khdhub%22%3A%22on%22%2C%22source_moviebox%22%3A%22on%22%2C%22source_moviesdrives%22%3A%22on%22%2C%22source_vaplayer%22%3A%22on%22%2C%22source_hdghartv%22%3A%22on%22%2C%22res_2160%22%3A%22on%22%2C%22res_1080%22%3A%22on%22%2C%22res_720%22%3A%22on%22%2C%22disable_direct%22%3A%22on%22%7D';
+// const BASE_URL = `https://pengu.uk/${PENGU_CONFIG}`;
 
 async function getImdbId(tmdbApiKey, tmdbId, s, e) {
     const key = tmdbApiKey;
@@ -15,7 +15,12 @@ async function getImdbId(tmdbApiKey, tmdbId, s, e) {
     } catch { return null; }
 }
 
-export async function getStream({ id, s, e, tmdbApiKey }) {
+export async function getStream({ id, s, e, sdk }) {
+    const tmdbApiKey = sdk?.tmdbApiKey || null;
+    const manifest = sdk?.penguManifest || null;
+    if (!tmdbApiKey || !manifest || (manifest && !manifest.endsWith('manifest.json'))) return null;
+    const BASE_URL = manifest ? manifest.split('/manifest.json')[0] : null;
+    if (!BASE_URL) return null;
     try {
         const imdbId = await getImdbId(tmdbApiKey, id, s, e);
         if (!imdbId) return null;

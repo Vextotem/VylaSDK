@@ -47,7 +47,9 @@ function getEpisodeIdFast(html, s, e) {
     return am ? am[1] : null;
 }
 
-export async function getStream({ id, s, e, tmdbApiKey, clientIP }) {
+export async function getStream({ id, s, e, sdk, clientIP }) {
+    const tmdbApiKey = sdk?.tmdbApiKey || null;
+    if (!tmdbApiKey) return null;
     try {
         const tmdbKey = tmdbApiKey;
         if (!tmdbKey) return null;

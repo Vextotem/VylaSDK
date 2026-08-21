@@ -300,7 +300,29 @@ export const SOURCES = [
         retries: 1,
         multiUrl: true,
         skipProxy: true,
-        disabled: true, // Temporarily disabled because they now require google auth
+        disabled: false, // Enabled, but only returns streams when a manifest is provided
+    },
+    
+    {
+        key: 'nova',
+        label: 'Nova',
+        sourceFile: 'nova',
+        proxyParam: 'nv',
+        timeout: 25000,
+        jitter: 500,
+        retries: 1,
+        multiUrl: true,
+    },
+    
+    {
+        key: 'megasource',
+        label: 'MegaSource',
+        sourceFile: 'megasource',
+        proxyParam: 'mg',
+        timeout: 25000,
+        jitter: 500,
+        retries: 1,
+        multiUrl: true,
     },
 
     {

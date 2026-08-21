@@ -39,7 +39,9 @@ async function tmdbToAnilist(tmdbId, season) {
 
 const SERVER_KEYS = ['hollymoviehd', 'allmovies', 'catflix', 'purstream', 'lamda', 'vidlink', 'klikxxi'];
 
-export async function getStream({ id, s, e, tmdbApiKey, audio }) {
+export async function getStream({ id, s, e, sdk, audio }) {
+    const tmdbApiKey = sdk?.tmdbApiKey || null;
+    if (!tmdbApiKey) return null;
     if (s) {
         const k = tmdbApiKey;
         const showData = k ? await fetchJson(`https://api.themoviedb.org/3/tv/${id}?api_key=${k}`, { signal: AbortSignal.timeout(5000) }).catch(() => null) : null;

@@ -67,7 +67,7 @@ function cacheGet(cache, key) {
 
 function cacheSet(cache, key, val, ttl) { cache.set(key, { val, ts: Date.now(), ttl }); }
 
-export async function createStreamArgs(source, tmdbApiKey, id, s, e, clientIP = null) {
+export async function createStreamArgs(source, sdk, id, s, e, clientIP = null) {
     const audio = /dub$/.test(source.key) ? 'dub' : 'sub';
     return {
         id: id,
@@ -76,7 +76,7 @@ export async function createStreamArgs(source, tmdbApiKey, id, s, e, clientIP = 
         clientIP: clientIP,
         absoluteBase: '/',
         audio,
-        tmdbApiKey,
+        sdk,
         config: source,
     }
 }

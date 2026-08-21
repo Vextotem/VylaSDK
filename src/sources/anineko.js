@@ -69,7 +69,9 @@ async function extractHls(embedUrl) {
     return null;
 }
 
-export async function getStream({ id, s, e, audio, tmdbApiKey }) {
+export async function getStream({ id, s, e, audio, sdk }) {
+    const tmdbApiKey = sdk?.tmdbApiKey || null;
+    if (!tmdbApiKey) return null;
     try {
         const info = await getTmdbInfo(tmdbApiKey, id, s ? 'tv' : 'movie', s);
         if (!info || !info.isAnime) return null;

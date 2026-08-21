@@ -4,7 +4,9 @@ const BASE_URL = 'https://www.fsonic.net';
 const FSHARE_BASE = 'https://fsharetv.co';
 const HEADERS = { 'User-Agent': USER_AGENT, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Accept-Language': 'en-US,en;q=0.9' };
 
-export async function getStream({ id, s, tmdbApiKey }) {
+export async function getStream({ id, s, sdk }) {
+    const tmdbApiKey = sdk?.tmdbApiKey || null;
+    if (!tmdbApiKey) return null;
     if (s != null) return null;
     try {
         const info = await getTmdbInfo(tmdbApiKey, id, 'movie');
