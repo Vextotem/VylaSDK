@@ -302,7 +302,7 @@ export const SOURCES = [
         skipProxy: true,
         disabled: false, // Enabled, but only returns streams when a manifest is provided
     },
-    
+
     {
         key: 'nova',
         label: 'Nova',
@@ -313,7 +313,7 @@ export const SOURCES = [
         retries: 1,
         multiUrl: true,
     },
-    
+
     {
         key: 'megasource',
         label: 'MegaSource',
@@ -566,6 +566,17 @@ export const SOURCES = [
         jitter: 500,
         retries: 2,
         skipProxy: true,
+    },
+
+    {
+        key: 'zxcstream',
+        label: 'ZxcStream',
+        sourceFile: 'zxcstream',
+        proxyParam: 'zxc',
+        timeout: 25000,
+        jitter: 500,
+        retries: 2,
+        multiUrl: true,
     },
 
 ];
