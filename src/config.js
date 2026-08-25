@@ -104,6 +104,24 @@ export const SOURCES = [
     },
 
     {
+        key: 'bcine',
+        label: 'Bcine',
+        sourceFile: 'bcine',
+        proxyParam: 'bc',
+        timeout: 25000,
+        jitter: 500,
+        retries: 2,
+        multiUrl: true,
+        cdnHeaders: [{
+            pattern: /1embed\.cc|videasy\.to/i,
+            headers: {
+                Referer: 'https://bcine.ru/',
+                Origin: 'https://bcine.ru',
+            },
+        }],
+    },
+
+    {
         key: 'cinejoy',
         label: 'Cinejoy',
         sourceFile: 'cinejoy',
