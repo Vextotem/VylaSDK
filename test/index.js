@@ -9,11 +9,11 @@ import dotenv from "dotenv";
 const CONFIG = {
     DEBUG: true,                 // Set to true to print outgoing requests, headers, formats, and responses
 
-    MOVIE_ID: "550",             // Movie TMDB ID to test
+    MOVIE_ID: "1084242",             // Movie TMDB ID to test
     TV_ID: "37854",               // TV TMDB ID to test, for anime I recommend using a random ID like 37854
     TV_SEASON: "1",              // TV Season to test
     TV_EPISODE: "1",             // TV Episode to test
-    STREAM_SOURCE: "",    // Source key to test
+    STREAM_SOURCE: "cinesrc",    // Source key to test
 
     TEST_SUBTITLE: false,         // Toggle subtitle testing
     TEST_DOWNLOAD: false,         // Toggle download testing

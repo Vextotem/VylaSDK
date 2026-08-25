@@ -134,6 +134,26 @@ export const SOURCES = [
     },
 
     {
+        key: 'cinesrc',
+        label: 'CineSrc',
+        sourceFile: 'cinesrc',
+        proxyParam: 'csr',
+        timeout: 25000,
+        jitter: 500,
+        retries: 2,
+        multiUrl: true,
+        skipProxy: true,
+        skipVerify: true,
+        cdnHeaders: [{
+            pattern: /glendale-plumbing\.com|1embed\.cc|bright\d+\.online/i,
+            headers: {
+                Referer: 'https://cinesrc.st/',
+                Origin: 'https://cinesrc.st',
+            },
+        }],
+    },
+
+    {
         key: 'cinesu',
         label: 'CineSu',
         sourceFile: 'cinesu',
