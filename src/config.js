@@ -116,6 +116,26 @@ export const SOURCES = [
     },
 
     {
+        key: 'cinesu',
+        label: 'CineSu',
+        sourceFile: 'cinesu',
+        proxyParam: 'cs',
+        timeout: 25000,
+        jitter: 500,
+        retries: 2,
+        multiUrl: true,
+        skipProxy: true,
+        skipVerify: true,
+        cdnHeaders: [{
+            pattern: /glendale-plumbing\.com/i,
+            headers: {
+                Referer: 'https://cine.su/',
+                Origin: 'https://cine.su',
+            },
+        }],
+    },
+
+    {
         key: 'flaxmovies',
         label: 'FlaxMovies',
         sourceFile: 'flaxmovies',
@@ -304,6 +324,17 @@ export const SOURCES = [
     },
 
     {
+        key: 'pstream',
+        label: 'PStream',
+        sourceFile: 'pstream',
+        proxyParam: 'ps',
+        timeout: 35000,
+        jitter: 500,
+        retries: 1,
+        multiUrl: true,
+    },
+
+    {
         key: 'nova',
         label: 'Nova',
         sourceFile: 'nova',
@@ -457,19 +488,6 @@ export const SOURCES = [
     },
 
     {
-        key: 'vidrift',
-        label: 'VidRift',
-        sourceFile: 'vidrift',
-        proxyParam: 'vr',
-        timeout: 20000,
-        jitter: 500,
-        retries: 2,
-        multiUrl: true,
-        skipProxy: true,
-        disabled: true, // Temporarily disabled because their site is down, embed website does not load
-    },
-
-    {
         key: 'vidrock',
         label: 'VidRock',
         sourceFile: 'vidrock',
@@ -487,17 +505,6 @@ export const SOURCES = [
                 Origin: 'https://vidrock.ru',
             },
         },],
-    },
-
-    {
-        key: 'vidsync',
-        label: 'VidSync',
-        sourceFile: 'vidsync',
-        proxyParam: 'vs',
-        timeout: 20000,
-        retries: 2,
-        multiUrl: true,
-        disabled: true, // Temporarily disabled due to enc dec issues
     },
 
     {
