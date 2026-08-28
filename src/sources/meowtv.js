@@ -13,7 +13,7 @@ const HEADERS = {
 };
 
 const SERVERS = [
-    'hindiv3'
+    'hindiv3', 'tcloud'
 ];
 
 const TIMEOUT_MS = 15000;
