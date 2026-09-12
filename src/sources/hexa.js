@@ -2,7 +2,7 @@ import crypto from 'node:crypto';
 import { fetchJson, fetchText, USER_AGENT } from '../utils/helpers.js';
 
 const API_BASE = 'https://enc-dec.app/api';
-const DOMAINS = ['hexa.su', 'flixer.su'];
+const DOMAINS = ['hexa.su', 'flixer.gd'];
 
 async function getChallengeToken() {
     try {
