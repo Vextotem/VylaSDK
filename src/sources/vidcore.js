@@ -1,11 +1,11 @@
 import { fetchJson, fetchText, USER_AGENT } from '../utils/helpers.js';
 
 const API_BASE = 'https://enc-dec.app/api';
-const HEADERS = { 'User-Agent': USER_AGENT, 'Referer': 'https://vidcore.net/', 'X-Requested-With': 'XMLHttpRequest' };
+const HEADERS = { 'User-Agent': USER_AGENT, 'Referer': 'https://vidcore.io/', 'X-Requested-With': 'XMLHttpRequest' };
 
 async function getDynamicServers(id, s, e) {
     try {
-        const html = await fetchText(s != null && e != null ? `https://vidcore.net/tv/${id}/${s}/${e}/` : `https://vidcore.net/movie/${id}/`, { headers: HEADERS });
+        const html = await fetchText(s != null && e != null ? `https://vidcore.io/tv/${id}/${s}/${e}/` : `https://vidcore.io/movie/${id}/`, { headers: HEADERS });
 
         const match = html.match(/\\"(?:en|token)\\":\\"(.*?)\\"/) || html.match(/"(?:en|token)":"(.*?)"/);
         if (!match?.[1]) return null;
