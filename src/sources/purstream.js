@@ -1,7 +1,8 @@
 import { fetchJson, USER_AGENT, getTmdbInfo } from '../utils/helpers.js';
+import { selectIdentityMatch } from '../utils/identity.js';
 
-const DOMAIN = 'https://purstream.club';
-const API_BASE = 'https://api.purstream.club/api/v1';
+const DOMAIN = 'https://purstream.ad';
+const API_BASE = 'https://api.purstream.ad/api/v1';
 
 const HEADERS = {
     'User-Agent': USER_AGENT,
@@ -14,11 +15,11 @@ const HEADERS = {
     'Sec-Fetch-Site': 'same-site'
 };
 
-export async function getStream({ id, s, e }) {
+export async function getStream({ id, s, e, sdk }) {
     try {
         const isTv = s != null;
 
-        const info = await getTmdbInfo(id, isTv ? 'tv' : 'movie');
+        const info = await getTmdbInfo(sdk?.tmdbApiKey, id, isTv ? 'tv' : 'movie');
 
 
         if (!info?.titles?.length) {
@@ -37,17 +38,7 @@ export async function getStream({ id, s, e }) {
         const items = searchData?.data?.items?.movies?.items || [];
 
         const type = isTv ? 'tv' : 'movie';
-        const lowerTitle = title.toLowerCase();
-
-        let match = items.find(item =>
-            item.type === type &&
-            item.title?.toLowerCase() === lowerTitle &&
-            (!info.year || item.release_date?.startsWith(String(info.year)))
-        );
-
-        if (!match) {
-            match = items.find(item => item.type === type);
-        }
+        const match = selectIdentityMatch(items, { ...info, mediaType: type });
 
         if (!match?.id) {
             return null;
