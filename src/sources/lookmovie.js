@@ -1,7 +1,8 @@
 import { USER_AGENT, fetchText, fetchJson } from '../utils/helpers.js';
+import { selectIdentityMatch } from '../utils/identity.js';
 
 const TMDB_BASE = 'https://api.themoviedb.org/3';
-const LM_DOMAINS = ['https://www.lookmovie2.to', 'https://lookmovie2.to', 'https://lookmovie.foundation'];
+const LM_DOMAINS = ['https://www.lookmovie2.to', 'https://lookmovie2.to', 'https://ww1.lookmovie.pn'];
 const HEADERS_BASE = { 'User-Agent': USER_AGENT, 'Accept-Language': 'en-US,en;q=0.9' };
 
 async function searchLookMovie(type, title, year, clientIP) {
@@ -11,7 +12,7 @@ async function searchLookMovie(type, title, year, clientIP) {
             const data = await fetchJson(`${base}/api/v1/${type}/do-search/?q=${encodeURIComponent(title)}`, { headers, signal: AbortSignal.timeout(4000) });
             const results = data?.result;
             if (results?.length) {
-                const match = results.find(r => String(r.year) === String(year)) ?? results.find(r => r.title?.toLowerCase() === title.toLowerCase()) ?? results[0];
+                const match = selectIdentityMatch(results, { titles: [title], year });
                 if (match) return { match, base };
             }
         } catch { }
